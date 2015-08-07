@@ -88,7 +88,20 @@ var UserSchema = new Schema({
 	},
 	resetPasswordExpires: {
 		type: Date
+	},
+	tasks:{
+		type: Array,
+		default: []
+	},
+	challenges:{
+		type: Array,
+		default: []
+	},
+	rewardsObtained:{
+		type: Array,
+		default: []
 	}
+
 });
 
 /**
