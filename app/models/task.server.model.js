@@ -22,6 +22,6 @@ var TaskSchema = new Schema({
     type: Boolean,
     default: false
   }
-  
 });
 
+mongoose.model('Task', TaskSchema);

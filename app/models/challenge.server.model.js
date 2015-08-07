@@ -19,3 +19,5 @@ var ChallengeSchema = new Schema({
     default: []
   }
 });
+
+mongoose.model('Challenge', ChallengeSchema);
