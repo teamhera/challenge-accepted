@@ -1,0 +1,82 @@
+<section data-ng-controller="UserToDoController">
+<span>Welcome</span>
+  <span data-ng-bind="authentication.user.displayName"></span>
+    <div class="row">
+      <div class="col-md-9">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Primary To Do List</h3>
+            </div>
+            <ul class="list-group" ng-repeat="task in tasks">
+              <li data-ng-bind="task.description" class="list-group-item"></li>
+            </ul>
+        </div>
+
+        <div ng-repeat="challenge in challenges">
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
+              </div>
+              <ul class="list-group" ng-repeat="task in challenge.tasks">
+                <li data-ng-bind="task.description" class="list-group-item"></li>
+              </ul>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
+          <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+          <li class="list-group-item list-group-item-info">Porta ac consectetur ac</li>
+          <li class="list-group-item list-group-item-info">Vestibulum at eros</li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+
+<!--
+
+<ul class="list-group" ng-repeat="topic in mainTopics">
+    <li class="list-group-item"> {{topic.name}}</li>
+
+
+var challenges = [challenge1, challenge2, challenge3]
+
+for each challenge generate:
+  - <div ng-repeat"{challenge in challenges}" class="panel-primary"
+
+Primary fixed
+
+
+tasks = {
+  id = int,
+  description = string,
+  completed = true/false,
+  reward = string (can be null)
+}
+
+challenge = {
+  name = string,
+  description = string,
+  reward = string,
+  tasks = [
+
+  ]
+}
+
+User = {
+  username = string //primary key
+  password = ###,
+  rewards = ###,
+  tasks = [
+
+  ],
+  challenges = [
+
+  ]
+}
+-->
