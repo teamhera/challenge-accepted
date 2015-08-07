@@ -9,6 +9,17 @@ module.exports = function(app) {
 	// User Routes
 	var users = require('../../app/controllers/users.server.controller');
 
+	// Setting up the users tasks routes
+	app.route('/users/tasks').get(users.getUserTasks); // get all tasks from user
+	app.route('/users/tasks').put(users.putUserTasks); // add single task to user tasks array
+	app.route('/users/tasks').report(users.reportUserTasks); // replace db user task array with array received from client request
+
+	// Setting up the users challenges routes
+	app.route('/users/challenges').get(); // get all challenges from user
+	app.route('/users/challenges').subscribe(); // add challenge to user challenges array
+	app.route('/users/challenges').unsubscribe(); // remove challenge from user challenges array
+	app.route('/users/challenges').report(); // replace db user challenge array with array received from client request
+
 	// Setting up the users profile api
 	app.route('/users/me').get(users.me);
 	app.route('/users').put(users.update);
