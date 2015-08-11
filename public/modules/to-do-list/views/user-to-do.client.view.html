@@ -2,38 +2,43 @@
 <span>Welcome</span>
   <span data-ng-bind="authentication.user.displayName"></span>
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-8">
 
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Primary To Do List</h3>
             </div>
-            <ul class="list-group" ng-repeat="task in tasks">
-              <li data-ng-bind="task.description" class="list-group-item"></li>
+            <ul class="list-group">
+              <li data-ng-bind="task.description" ng-repeat="task in tasks" class="list-group-item"></li>
             </ul>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button ng-click="addUserTask()" class="btn btn-default" type="button">Add</button>
+          </span>
+          <input type="text" class="form-control" id="taskData" placeholder="Add task...">
+        </div><!-- /input-group -->
         </div>
 
-        <div ng-repeat="challenge in challenges">
+
+        <div ng-repeat="challenge in userChallenges">
           <div class="panel panel-primary">
               <div class="panel-heading">
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
-              <ul class="list-group" ng-repeat="task in challenge.tasks">
-                <li data-ng-bind="task.description" class="list-group-item"></li>
+              <ul class="list-group">
+                <li data-ng-bind="task.description" class="list-group-item" ng-repeat="task in challenge.tasks"></li>
               </ul>
           </div>
         </div>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <ul class="list-group">
-          <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-          <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
-          <li class="list-group-item list-group-item-info">Porta ac consectetur ac</li>
-          <li class="list-group-item list-group-item-info">Vestibulum at eros</li>
+          <li class="list-group-item list-group-item-success" ng-repeat="challenge in allChallenges">{{challenge.name}} <button ng-click="addChallenge($index)">Add</button><button>More Info</button></li>
         </ul>
       </div>
+
     </div>
 </section>
 
