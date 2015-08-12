@@ -2,7 +2,8 @@
 
 var _ = require('lodash'),
   mongoose = require('mongoose'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  Task = mongoose.model('Task');
 
 // get all user tasks
 exports.getUserTasks = function(req,res){
@@ -12,7 +13,8 @@ exports.getUserTasks = function(req,res){
       res.send(item.tasks);
     });
   } else {
-    res.status(400).send({
+
+    return res.status(400).send({
       message: 'User is not signed in'
     });
   }
@@ -21,14 +23,16 @@ exports.getUserTasks = function(req,res){
 // add task to user tasks array
 exports.putUserTasks = function(req,res){
   if(req.user){
-    var user = req.body;
-    return User.find({username: user.username}, function(err, item){
-      item.tasks.push(user.task);
+    var task = new Task(req.body);
+    return User.find({username: req.user.username}, function(err, item){
+      item.tasks.push(task);
+      task.save();
       item.save();
       res.send();
     });
   } else {
-    res.status(400).send({
+
+    return res.status(400).send({
       message: 'User is not signed in'
     });
   }
@@ -44,7 +48,8 @@ exports.reportUserTasks = function(req,res){
       res.send();
     });
   } else {
-    res.status(400).send({
+
+    return res.status(400).send({
       message: 'User is not signed in'
     });
   }

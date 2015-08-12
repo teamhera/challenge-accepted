@@ -15,10 +15,10 @@ module.exports = function(app) {
 	app.route('/users/tasks').report(users.reportUserTasks); // replace db user task array with array received from client request
 
 	// Setting up the users challenges routes
-	app.route('/users/challenges').get(); // get all challenges from user
-	app.route('/users/challenges').subscribe(); // add challenge to user challenges array
-	app.route('/users/challenges').unsubscribe(); // remove challenge from user challenges array
-	app.route('/users/challenges').report(); // replace db user challenge array with array received from client request
+	app.route('/users/challenges').get(users.getAllUserChallenges); // get all challenges from user
+	app.route('/users/challenges').subscribe(users.addChallenges); // add challenge to user challenges array
+	app.route('/users/challenges').unsubscribe(users.removeUserChallenge); // remove challenge from user challenges array
+	app.route('/users/challenges').report(users.updateChallenges); // replace db user challenge array with array received from client request
 
 	// Setting up the users profile api
 	app.route('/users/me').get(users.me);
