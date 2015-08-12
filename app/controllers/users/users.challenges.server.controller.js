@@ -69,4 +69,3 @@ exports.updateChallenges = function(req, res){
     });
   }
 };
->>>>>>> added routes and helper functions for querying the database for users and challenges

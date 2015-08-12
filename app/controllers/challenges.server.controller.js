@@ -9,5 +9,5 @@ var _ = require('lodash');
  * Extend user's controller
  */
 module.exports = _.extend(
-  require('./users/challenges.helper.server.controller')
+  require('./challenges/challenges.helper.server.controller')
 );
