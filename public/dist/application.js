@@ -287,6 +287,12 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     //we're having an issue with injecting the ToDo Service, getting an error - 08/07 - Friday
 
     // $scope.userData = {};
+
+
+
+
+
+    //calls Todo.getUserTasks then console logs the return , or console logs the error
     $scope.getUserTasks = function(){
       Todo.getUserTasks()
       .then(function(ret){
@@ -296,7 +302,13 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         console.log(err);
       });
      };
+
+     //calls getUserTasks for testing.  Should console log results.
      $scope.getUserTasks();
+
+
+
+     
 
     // $scope.allChallenges = getAllChallenges(); // Gives us whole challenges array
     /////////////
@@ -398,6 +410,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
 			return challengeData;
 		};
 
+
+
+
+    //getUserTasks service, requests the user data from DB
+      //I'm not sure what other data we need to send.
 		var getUserTasks = function(USERDATA){
 			//get the tasks from the USERDATA object returned by
       return $http({
