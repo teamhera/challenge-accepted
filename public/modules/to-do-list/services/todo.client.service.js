@@ -45,6 +45,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
 			return challengeData;
 		};
 
+
 		var getUserTasks = function(USERDATA){
 			//get the tasks from the USERDATA object returned by
       return $http({
