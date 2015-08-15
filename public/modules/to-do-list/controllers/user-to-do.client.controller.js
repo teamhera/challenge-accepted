@@ -17,9 +17,11 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.getUserTasks = function(){
       Todo.getUserTasks()
       .then(function(ret){
+        console.log('NOW WE"RE IN THE CONTROLLER');
         console.log(ret);
         $scope.userData = ret;
       }, function(err){
+        console.log('ERROR');
         console.log(err);
       });
      };
@@ -29,7 +31,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
 
 
 
-     
+
 
     // $scope.allChallenges = getAllChallenges(); // Gives us whole challenges array
     /////////////

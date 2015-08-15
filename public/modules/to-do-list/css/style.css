@@ -1,6 +1,6 @@
 .ex-img {
-  display: none;
+  visibility: hidden;
 }
 .ex-img:hover{
-  display: visible;
+  visibility: visible;
 }
