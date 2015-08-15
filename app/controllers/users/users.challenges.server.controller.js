@@ -22,8 +22,9 @@ exports.getAllUserChallenges = function(req, res){
 // add challenge to user challenges array -subscribe
 exports.addChallenges = function(req, res){
   if(req.user){
-    return Challenge.find({_id: req.body._id}, function(err,item){
-      User.find({_id: req.user.id_}, function(err, user){
+    return User.find({_id: req.user._id}, function(err, user){
+      Challenge.find({_id: req.body._id}, function(err,item){
+        console.log(req);
         user[0].challenges.push(item[0]);
         user[0].save();
         res.send();
@@ -41,7 +42,11 @@ exports.removeUserChallenges = function(req, res){
   if(req.user){
     return User.find({_id: req.user._id}, function(err, user){
       user[0].challenges = user[0].challenges.filter(function(challenge){
-        return challenge._id !== req.body._id;
+        if(challenge){
+          return challenge._id.toString() !== req.body._id;
+        } else {
+          return false;
+        }
       });
       user[0].save();
       res.send();

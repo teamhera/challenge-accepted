@@ -42,7 +42,7 @@ exports.removeUserTasks = function(req,res){
   if(req.user){
     return User.find({_id: req.user._id}, function(err, item){
       item[0].tasks = item[0].tasks.filter(function(element){
-        return element._id !== req.body._id;
+        return element._id.toString() !== req.body._id;
       });
       item[0].save();
     });
