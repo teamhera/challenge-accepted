@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('to-do-list').factory('Todo', [
-	function() {
+angular.module('to-do-list').factory('Todo', ['$http',
+	function($http) {
 		// Todo service logic
 		// ...
 
@@ -17,7 +17,7 @@ angular.module('to-do-list').factory('Todo', [
 		var getUserData = function(){
 			//Get request for all user data
 			//store that data in USERDATA object
-			var userData = {username: "bob", rewards: null,
+			var userData = {username: 'bob', rewards: null,
 											tasks: [{id: 12, description: 'Do your laundry', completed: false, rewards: null},{id: 16, description: 'Do the dishes', completed: false, rewards: null}],
 											challenges: [{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
                        {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}
@@ -45,9 +45,23 @@ angular.module('to-do-list').factory('Todo', [
 			return challengeData;
 		};
 
+
+
+
+    //getUserTasks service, requests the user data from DB
+      //I'm not sure what other data we need to send.
 		var getUserTasks = function(USERDATA){
 			//get the tasks from the USERDATA object returned by
-			return userData.tasks;
+      return $http({
+        method: 'GET',
+        url: '/users/tasks/'
+      })
+      .then(function(response){
+        console.log(response.data);
+      },
+      function(err){
+        console.log(err);
+      });
 		};
 
 
@@ -55,7 +69,8 @@ angular.module('to-do-list').factory('Todo', [
 
 		// Public API
 		return {
-			getUserData: getUserData
+			getUserData: getUserData,
+      getUserTasks: getUserTasks
 		};
 	}
 ]);
