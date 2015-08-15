@@ -8,9 +8,8 @@ var _ = require('lodash'),
 // get all user tasks
 exports.getUserTasks = function(req,res){
   if(req.user){
-    var user = req.body;
-    return User.find({username: user.username}, function(err, item){
-      res.send(item.tasks);
+    return User.find({_id: req.user._id}, function(err, item){
+      res.send(item[0].tasks);
     });
   } else {
 
@@ -24,10 +23,10 @@ exports.getUserTasks = function(req,res){
 exports.putUserTasks = function(req,res){
   if(req.user){
     var task = new Task(req.body);
-    return User.find({username: req.user.username}, function(err, item){
-      item.tasks.push(task);
+    return User.find({_id: req.user._id}, function(err, item){
+      item[0].tasks.push(task);
       task.save();
-      item.save();
+      item[0].save();
       res.send();
     });
   } else {
@@ -42,9 +41,9 @@ exports.putUserTasks = function(req,res){
 exports.reportUserTasks = function(req,res){
   if(req.user){
     var user = req.body;
-    return User.find({username: user.username}, function(err, item){
-      item.tasks = user.tasks;
-      item.save();
+    return User.find({_id: req.user._id}, function(err, item){
+      item[0].tasks = user.tasks;
+      item[0].save();
       res.send();
     });
   } else {
