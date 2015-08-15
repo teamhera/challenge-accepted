@@ -10,7 +10,7 @@
                     Primary To Do List</h3>
             </div>
             <ul class="list-group">
-              <li data-ng-bind="task.description" ng-repeat="task in tasks" class="list-group-item"></li>
+              <li ng-repeat="task in tasks" class="list-group-item"><img class="ex-img"src="modules/to-do-list/img/ex.png">{{ task.description }}</li>
             </ul>
         <div class="input-group">
           <span class="input-group-btn">

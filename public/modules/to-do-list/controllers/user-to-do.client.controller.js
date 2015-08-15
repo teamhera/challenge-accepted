@@ -1,21 +1,35 @@
 'use strict';
 
-angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication',
+angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication', 'Todo',
 //Add ToDo Service
-	function($scope, Authentication) { // Add ToDo Service
+	function($scope, Authentication, Todo) { // Add ToDo Service
 		// Controller Logic
 		// ...
     //we're having an issue with injecting the ToDo Service, getting an error - 08/07 - Friday
 
     // $scope.userData = {};
-    // $scope.getUserData = function(){
-    //   Todo.getUserData()
-    //   .then(function(ret){
-    //     $scope.userData = ret;
-    //     console.log(ret);
-    //   });
-    //  };
 
+
+
+
+
+    //calls Todo.getUserTasks then console logs the return , or console logs the error
+    $scope.getUserTasks = function(){
+      Todo.getUserTasks()
+      .then(function(ret){
+        console.log(ret);
+        $scope.userData = ret;
+      }, function(err){
+        console.log(err);
+      });
+     };
+
+     //calls getUserTasks for testing.  Should console log results.
+     $scope.getUserTasks();
+
+
+
+     
 
     // $scope.allChallenges = getAllChallenges(); // Gives us whole challenges array
     /////////////
