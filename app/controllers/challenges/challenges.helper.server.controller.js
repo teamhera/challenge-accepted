@@ -34,6 +34,7 @@ exports.addChallenges = function(req,res){
 // request body should have at least one paramater that can match a challenge
 exports.findChallenges = function(req,res){
   if(req.user){
+    console.log(req.body);
     return Challenges.find(req.body, function(err, challenges) {
       res.send(challenges);
     });
