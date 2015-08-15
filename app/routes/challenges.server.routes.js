@@ -13,6 +13,6 @@ module.exports = function(app) {
   app.route('/challenges').post(challenges.addChallenges);
 
   //retrieves a single challenge by name from db
-  app.route('/challenges').search(challenges.getOneChallenge);
+  app.route('/challenges').search(challenges.findChallenges);
 
 };
