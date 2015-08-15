@@ -30,12 +30,13 @@ exports.addChallenges = function(req,res){
   }
 };
 
-// this function returns one challenge from challenges table
-// request body should be in the form "{name: <challenge name>}"
-exports.getOneChallenge = function(req,res){
+// this function returns an array of challenges from challenges table
+// request body should have at least one paramater that can match a challenge
+exports.findChallenges = function(req,res){
   if(req.user){
-    return Challenges.find(req.body, function(err, challenge) {
-      res.send(challenge);
+    console.log(req.body);
+    return Challenges.find(req.body, function(err, challenges) {
+      res.send(challenges);
     });
   } else {
     return res.status(400).send({

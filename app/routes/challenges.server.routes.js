@@ -10,9 +10,9 @@ module.exports = function(app) {
   app.route('/challenges').get(challenges.getChallenges);
 
   //adds a single challenge to db
-  app.route('/challenges').post(challenges.addChallenges);
+  app.route('/challenges').put(challenges.addChallenges);
 
   //retrieves a single challenge by name from db
-  app.route('/challenges').search(challenges.getOneChallenge);
+  app.route('/challenges/search').put(challenges.findChallenges);
 
 };
