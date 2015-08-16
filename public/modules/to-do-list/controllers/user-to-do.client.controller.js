@@ -36,8 +36,16 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         //filter for challenges already attached to user
         $scope.allChallenges = [];
         for (var i = 0; i < res.data.length; i++){
-          if ($scope.userChallenges.indexOf(res.data[i]) === -1){
+          var toPush = true;
+          for(var j = 0; j < $scope.userChallenges.length; j++){
+            if (res.data[i]._id === $scope.userChallenges[j]._id){
+              toPush = false;
+            }
+          }
+          if(toPush){
+            console.log('We pushed!');
             $scope.allChallenges.push(res.data[i]);
+            console.log($scope.allChallenges);
           }
         }
         //sets scope.allrChallenges to the array of all challenges available
