@@ -356,13 +356,6 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
      };
 
-    // $scope.addUserTask = function(){
-    //  var data = document.getElementById('taskData').value;
-    //  var task = {id: 11, description: data, rewards: null, completed: false,};
-    //  $scope.tasks.push(task);
-    //  document.getElementById('taskData').value = '';
-    // };
-
     //Initialization function for getting initial user data
     $scope.init = function(){
      $scope.getUserTasks();
@@ -373,53 +366,10 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
   }
 ]);
 
-
-
-
-/* DATA MODEL
-tasks = {
-  id = int,
-  description = string,
-  completed = true/false,
-  reward = string (can be null)
-}
-
-challenge = {
-  name = string,
-  description = string,
-  reward = string,
-  tasks = [
-
-  ]
-}
-
-User = {
-  username = string //primary key
-  password = ###,
-  rewards = ###,
-  tasks = [task go here],
-  challenges = [challenge go here]
-}
-
-AllChalenges = [ {challenge1}, {challenge2} ]
-*/
-
 'use strict';
 
 angular.module('to-do-list').factory('Todo', ['$http',
   function($http) {
-    // Todo service logic
-    // ...
-
-//    User = {
-//      username = string //primary key
-//      password = ###,
-//      rewards = ###,
-//      tasks = [],
-//      challenges = []
-// }
-
-
 
     //Requests list of user tasks from the server
     var getUserTasks = function(){
@@ -491,10 +441,6 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
-
-    // /users/challenges PUT add challenge to challenges for user
-
-
     // Public API
     return {
       getUserTasks: getUserTasks,
@@ -505,18 +451,6 @@ angular.module('to-do-list').factory('Todo', ['$http',
 		};
 	}
 ]);
-
-
-
-
-/*
- $scope.tasks = [{id: 12, description: 'Do your laundry', completed: false, rewards: null},{id: 16, description: 'Do the dishes', completed: false, rewards: null}];
-	  $scope.userChallenges =[{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
-                        {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}];
-    $scope.allChallenges = [{name: 'Awesome Diet', description: 'This is a dieting challenge', rewards: null, tasks: [{id: 22, description: 'Diet 1x', completed: false, rewards: null},{id: 5, description: 'Eat 47 apples', completed: false, rewards: null}]},
-                        {name: 'Rock Climbing', description: 'This is a rock climbing challenge', rewards: null, tasks: [{id: 66, description: 'Climb 1x', completed: false, rewards: null},{id: 11, description: 'Climb 100x', completed: false, rewards: null}]}];
-
-*/
 
 'use strict';
 
