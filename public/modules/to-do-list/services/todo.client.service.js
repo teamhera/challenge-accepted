@@ -14,44 +14,9 @@ angular.module('to-do-list').factory('Todo', ['$http',
 // }
 
 
-    var getUserData = function(){
-      //Get request for all user data
-      //store that data in USERDATA object
-      var userData = {username: 'bob', rewards: null,
-                      tasks: [{id: 12, description: 'Do your laundry', completed: false, rewards: null},{id: 16, description: 'Do the dishes', completed: false, rewards: null}],
-                      challenges: [{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
-                       {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}
-                      ]};
-      return userData;
-    };
-      // var getLinks = function(urls){ /// Use this pattern when DB is hookedup
-    //    return $http({
-    //      method: 'GET',
-    //      url: '/api/links/',
-    //      data: urls
-    //    })
-    //    .then(function(resp){
-    //      return resp.data;
-    //    });
-      // };
 
-
-
-      //.then( ...  )
-
-
-    var getChallengeData = function(){
-      //get request
-      return challengeData;
-    };
-
-
-
-
-    //getUserTasks service, requests the user data from DB
-      //I'm not sure what other data we need to send.
-    var getUserTasks = function(USERDATA){
-      //get the tasks from the USERDATA object returned by
+    //Requests list of user tasks from the server
+    var getUserTasks = function(){
       return $http({
         method: 'GET',
         url: '/users/tasks'
@@ -64,13 +29,40 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    //retrieves array of user challenges from the db
+    var getUserChallenges = function(){
+      return $http({
+        method: 'GET',
+        url: '/users/challenges'
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
 
+    //retrieves all available challenges from the db
+    var getAllChallenges = function(){
+      return $http({
+        method: 'GET',
+        url: '/challenges'
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
 
 
     // Public API
     return {
-      getUserData: getUserData,
-      getUserTasks: getUserTasks
+      getUserTasks: getUserTasks,
+      getUserChallenges: getUserChallenges,
+      getAllChallenges: getAllChallenges
 		};
 	}
 ]);

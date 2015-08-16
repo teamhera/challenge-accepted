@@ -298,7 +298,29 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         console.log(err);
       });
      };
+    //calls Todo.getUserChallenges which returns the array of challenges attached to the user
+    $scope.getUserChallenges = function(){
+      Todo.getUserChallenges()
+      .then(function(res){
+        console.log(res);
+        //sets scope.userChallenges to the array of challenges the user is involved in
+        $scope.userChallenges = res.data;
+      }, function(err){
+        console.log(err);
+      });
+     };
 
+     //calls Todo.getAllChallenges which returns the array of all challenges available
+     $scope.getAllChallenges = function(){
+      Todo.getAllChallenges()
+      .then(function(res){
+        console.log(res);
+        //sets scope.allrChallenges to the array of all challenges available
+        $scope.allChallenges = res.data;
+      }, function(err){
+        console.log(err);
+      });
+     };
 
 
 
@@ -309,10 +331,10 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.authentication = Authentication;
 
     //app.route('/users/challenges').get(); route for getting user challenges
-    $scope.userChallenges =[{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
-                        {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}];
-    $scope.allChallenges = [{name: 'Awesome Diet', description: 'This is a dieting challenge', rewards: null, tasks: [{id: 22, description: 'Diet 1x', completed: false, rewards: null},{id: 5, description: 'Eat 47 apples', completed: false, rewards: null}]},
-                        {name: 'Rock Climbing', description: 'This is a rock climbing challenge', rewards: null, tasks: [{id: 66, description: 'Climb 1x', completed: false, rewards: null},{id: 11, description: 'Climb 100x', completed: false, rewards: null}]}];
+    // $scope.userChallenges =[{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
+    //                     {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}];
+    // $scope.allChallenges = [{name: 'Awesome Diet', description: 'This is a dieting challenge', rewards: null, tasks: [{id: 22, description: 'Diet 1x', completed: false, rewards: null},{id: 5, description: 'Eat 47 apples', completed: false, rewards: null}]},
+    //                     {name: 'Rock Climbing', description: 'This is a rock climbing challenge', rewards: null, tasks: [{id: 66, description: 'Climb 1x', completed: false, rewards: null},{id: 11, description: 'Climb 100x', completed: false, rewards: null}]}];
     $scope.addChallenge = function(index){
       console.log($scope.allChallenges[index]);
       $scope.userChallenges.push($scope.allChallenges[index]);
@@ -324,9 +346,11 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
      document.getElementById('taskData').value = '';
     };
 
-    //Initialization function for getting initital user data
+    //Initialization function for getting initial user data
     $scope.init = function(){
      $scope.getUserTasks();
+     $scope.getUserChallenges();
+     $scope.getAllChallenges();
     };
 
     $scope.init();
@@ -380,44 +404,9 @@ angular.module('to-do-list').factory('Todo', ['$http',
 // }
 
 
-    var getUserData = function(){
-      //Get request for all user data
-      //store that data in USERDATA object
-      var userData = {username: 'bob', rewards: null,
-                      tasks: [{id: 12, description: 'Do your laundry', completed: false, rewards: null},{id: 16, description: 'Do the dishes', completed: false, rewards: null}],
-                      challenges: [{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
-                       {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}
-                      ]};
-      return userData;
-    };
-      // var getLinks = function(urls){ /// Use this pattern when DB is hookedup
-    //    return $http({
-    //      method: 'GET',
-    //      url: '/api/links/',
-    //      data: urls
-    //    })
-    //    .then(function(resp){
-    //      return resp.data;
-    //    });
-      // };
 
-
-
-      //.then( ...  )
-
-
-    var getChallengeData = function(){
-      //get request
-      return challengeData;
-    };
-
-
-
-
-    //getUserTasks service, requests the user data from DB
-      //I'm not sure what other data we need to send.
-    var getUserTasks = function(USERDATA){
-      //get the tasks from the USERDATA object returned by
+    //Requests list of user tasks from the server
+    var getUserTasks = function(){
       return $http({
         method: 'GET',
         url: '/users/tasks'
@@ -430,13 +419,40 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    //retrieves array of user challenges from the db
+    var getUserChallenges = function(){
+      return $http({
+        method: 'GET',
+        url: '/users/challenges'
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
 
+    //retrieves all available challenges from the db
+    var getAllChallenges = function(){
+      return $http({
+        method: 'GET',
+        url: '/challenges'
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
 
 
     // Public API
     return {
-      getUserData: getUserData,
-      getUserTasks: getUserTasks
+      getUserTasks: getUserTasks,
+      getUserChallenges: getUserChallenges,
+      getAllChallenges: getAllChallenges
 		};
 	}
 ]);
