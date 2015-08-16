@@ -37,6 +37,35 @@ exports.putUserTasks = function(req,res){
   }
 };
 
+// toggles completion state of a task in user's task array
+exports.toggleUserTask = function(req,res){ //req.body.taskId   req.body.challengeId
+  if(req.user){
+    return User.find({_id: req.user._id}, function(err, item){
+      var taskArray;
+      if(req.body.challengeId){
+        item[0].challenges.forEach(function(challenge){
+          if(challenge._id.toString() === req.body.challengeId ){
+            taskArray = challenge.tasks;
+          }
+        });
+      } else {
+        taskArray = item[0].tasks;
+      }
+      taskArray.forEach(function(task){
+        if(task._id.toString() === req.body.taskId){
+          task.completed = !task.completed;
+        }
+      });
+      item[0].save();
+      res.send();
+    });
+  } else {
+    return res.status(400).send({
+      message: 'User is not signed in'
+    });
+  }
+};
+
 // remove task from user tasks array
 exports.removeUserTasks = function(req,res){
   if(req.user){
