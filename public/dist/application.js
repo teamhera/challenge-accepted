@@ -315,8 +315,14 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       Todo.getAllChallenges()
       .then(function(res){
         console.log(res);
+        //filter for challenges already attached to user
+        $scope.allChallenges = [];
+        for (var i = 0; i < res.data.length; i++){
+          if ($scope.userChallenges.indexOf(res.data[i]) !== -1){
+            $scope.allChallenges.push(res.data[i]);
+          }
+        }
         //sets scope.allrChallenges to the array of all challenges available
-        $scope.allChallenges = res.data;
       }, function(err){
         console.log(err);
       });
@@ -324,10 +330,10 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
 
 
     $scope.addChallenge = function(index){
-      console.log($scope.allChallenges[index]._id);
       Todo.putUserChallenge($scope.allChallenges[index]._id)
       .then(function(res){
         $scope.getUserChallenges();
+        $scope.getAllChallenges();
       }, function(err){
         console.log(err);
       });
