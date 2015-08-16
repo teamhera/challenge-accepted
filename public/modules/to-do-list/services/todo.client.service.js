@@ -57,12 +57,30 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var putUserChallenge = function(id){
+      return $http({
+        method: 'PUT',
+        url: '/users/challenges',
+        data: {_id: id}
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
+
+    // /users/challenges PUT add challenge to challenges for user
+
 
     // Public API
     return {
       getUserTasks: getUserTasks,
       getUserChallenges: getUserChallenges,
-      getAllChallenges: getAllChallenges
+      getAllChallenges: getAllChallenges,
+      putUserChallenge: putUserChallenge
 		};
 	}
 ]);
