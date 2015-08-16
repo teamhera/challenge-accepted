@@ -7,3 +7,7 @@
 /*.ex-img:hover img{
   visibility: visible;
 }*/
+
+.completed {
+  text-decoration: line-through;
+}

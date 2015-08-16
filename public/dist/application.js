@@ -357,23 +357,23 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
      };
 
     $scope.completeUserTask = function(index){
-      console.log('completeUserTask, line 81 controller');
-      console.log($scope.tasks);
-      console.log($scope.tasks[index]);
       Todo.updateUserTask($scope.tasks[index].id)
       .then(function(res){
         $scope.getUserTasks();
+        console.log('completeUserTask, line 81 controller');
+        console.log($scope.tasks);
+        console.log($scope.tasks[index]);
       },function(err){
         console.log(err);
       });
     };
 
     $scope.completeChallengeTask = function(index){
-      console.log('completeChallengeTask, line 91 controller');
-      console.log(this);
       Todo.updateChallengeTask(this._id, this.tasks[index].id)
       .then(function(res){
         $scope.getUserChallenges();
+        console.log('completeChallengeTask, line 91 controller');
+        console.log(this);
       },function(err){
         console.log(err);
       });
@@ -458,7 +458,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
       return $http({
         method: 'PUT',
         url: '/users/tasks/update',
-        data: {id: taskId}
+        data: {taskId: taskId}
       })
       .then(function(response){
         return response;
@@ -472,7 +472,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
       return $http({
         method: 'PUT',
         url: '/users/tasks/update',
-        data: {_id: challengeId, id: taskId}
+        data: {challengeId: challengeId, taskId: taskId}
       })
       .then(function(response){
         return response;
