@@ -356,27 +356,28 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
      };
 
-    // $scope.completeUserTask = function(index){
-    //   $scope.tasks[index].completed = true;
-    //   Todo.putUserTask($scope.tasks[index])
-    //   .then(function(res){
-    //     console.log($scope.tasks[index]);
-    //     $scope.getUserTasks();
-    //   },function(err){
-    //     console.log(err);
-    //   });
-    // };
+    $scope.completeUserTask = function(index){
+      console.log('completeUserTask, line 81 controller');
+      console.log($scope.tasks);
+      console.log($scope.tasks[index]);
+      Todo.updateUserTask($scope.tasks[index].id)
+      .then(function(res){
+        $scope.getUserTasks();
+      },function(err){
+        console.log(err);
+      });
+    };
 
-    // $scope.completeChallengeTask = function(index){
-    //   this.tasks[index].completed = true;
-    //   Todo.putUserTask(this.tasks[index])
-    //   .then(function(res){
-    //     console.log(this.tasks[index]);
-    //     $scope.getUserChallenges();
-    //   },function(err){
-    //     console.log(err);
-    //   });
-    // };
+    $scope.completeChallengeTask = function(index){
+      console.log('completeChallengeTask, line 91 controller');
+      console.log(this);
+      Todo.updateChallengeTask(this._id, this.tasks[index].id)
+      .then(function(res){
+        $scope.getUserChallenges();
+      },function(err){
+        console.log(err);
+      });
+    };
 
     //  $scope.removeTask = function(index){
 
@@ -438,7 +439,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
-
+    //Adds a challenge to user
     var putUserChallenge = function(id){
       return $http({
         method: 'PUT',
@@ -452,12 +453,12 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
-
-    var putUserTask = function(task){
+    //Change
+    var updateUserTask = function(taskId){
       return $http({
         method: 'PUT',
-        url: '/users/tasks',
-        data: task
+        url: '/users/tasks/update',
+        data: {id: taskId}
       })
       .then(function(response){
         return response;
@@ -467,11 +468,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
-    var removeUserTask = function(id){
-     return $http({
+    var updateChallengeTask = function(challengeId, taskId){
+      return $http({
         method: 'PUT',
-        url: '/users/tasks/remove',
-        data: {_id: id}
+        url: '/users/tasks/update',
+        data: {_id: challengeId, id: taskId}
       })
       .then(function(response){
         return response;
@@ -480,6 +481,20 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
+
+    // var removeUserTask = function(id){
+    //  return $http({
+    //     method: 'PUT',
+    //     url: '/users/tasks/remove',
+    //     data: {_id: id}
+    //   })
+    //   .then(function(response){
+    //     return response;
+    //   },
+    //   function(err){
+    //     console.log(err);
+    //   });
+    // };
 
 
 
@@ -489,8 +504,8 @@ angular.module('to-do-list').factory('Todo', ['$http',
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
       putUserChallenge: putUserChallenge,
-      putUserTask: putUserTask,
-      removeUserTask: removeUserTask
+      updateUserTask: updateUserTask,
+      updateChallengeTask: updateChallengeTask
 		};
 	}
 ]);
