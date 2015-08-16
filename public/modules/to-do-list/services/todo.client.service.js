@@ -71,6 +71,20 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var putUserTask = function(task){
+      return $http({
+        method: 'PUT',
+        url: '/users/tasks',
+        data: task
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
 
     // /users/challenges PUT add challenge to challenges for user
 
@@ -80,7 +94,8 @@ angular.module('to-do-list').factory('Todo', ['$http',
       getUserTasks: getUserTasks,
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
-      putUserChallenge: putUserChallenge
+      putUserChallenge: putUserChallenge,
+      putUserTask: putUserTask
 		};
 	}
 ]);
