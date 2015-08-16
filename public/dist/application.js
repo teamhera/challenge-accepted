@@ -318,7 +318,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         //filter for challenges already attached to user
         $scope.allChallenges = [];
         for (var i = 0; i < res.data.length; i++){
-          if ($scope.userChallenges.indexOf(res.data[i]) !== -1){
+          if ($scope.userChallenges.indexOf(res.data[i]) === -1){
             $scope.allChallenges.push(res.data[i]);
           }
         }
