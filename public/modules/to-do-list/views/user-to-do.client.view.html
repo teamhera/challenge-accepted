@@ -27,7 +27,7 @@
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
               <ul class="list-group">
-                <li data-ng-bind="task.description" class="list-group-item" ng-repeat="task in challenge.tasks"></li>
+                <li class="list-group-item" ng-repeat="task in challenge.tasks"><span class="ex-img"><img src="modules/to-do-list/img/ex.png"> {{task.description}}</li>
               </ul>
           </div>
         </div>
