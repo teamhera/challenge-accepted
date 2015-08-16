@@ -104,16 +104,13 @@ tasks = {
   completed = true/false,
   reward = string (can be null)
 }
-
 challenge = {
   name = string,
   description = string,
   reward = string,
   tasks = [
-
   ]
 }
-
 User = {
   username = string //primary key
   password = ###,
@@ -121,6 +118,5 @@ User = {
   tasks = [task go here],
   challenges = [challenge go here]
 }
-
 AllChalenges = [ {challenge1}, {challenge2} ]
 */

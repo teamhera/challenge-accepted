@@ -13,6 +13,7 @@ module.exports = function(app) {
 	app.route('/users/tasks').get(users.getUserTasks); // get all tasks from user
 	app.route('/users/tasks').put(users.putUserTasks); // add single task to user tasks array
 	app.route('/users/tasks/remove').put(users.removeUserTasks); //delete a task from user tasks array
+	app.route('/users/tasks/update').put(users.toggleUserTask); // toggle completion of task
 	// app.route('/users/tasks').report(users.reportUserTasks); // replace db user task array with array received from client request
 
 	// Setting up the users challenges routes
