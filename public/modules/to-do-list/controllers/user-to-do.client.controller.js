@@ -19,7 +19,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         console.log(err);
       });
      };
-    //calls Todo.getUserChallenges which returns the array of challenges attached to the user
+    //calls Todo.getUserChallenges which returns the array of challenges attached to the user and updates allChallenges
     $scope.getUserChallenges = function(){
       Todo.getUserChallenges()
       .then(function(res){
@@ -30,62 +30,64 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         console.log(err);
       })
       .then(function(res){
-       Todo.getAllChallenges()
-      .then(function(res){
-        console.log(res);
-        //filter for challenges already attached to user
-        $scope.allChallenges = [];
-        for (var i = 0; i < res.data.length; i++){
-          var toPush = true;
-          for(var j = 0; j < $scope.userChallenges.length; j++){
-            if (res.data[i]._id === $scope.userChallenges[j]._id){
-              toPush = false;
+        //Returns array of all challenges available to user
+         Todo.getAllChallenges()
+        .then(function(res){
+          console.log(res);
+          //filters for challenges already attached to user
+          $scope.allChallenges = [];
+          for (var i = 0; i < res.data.length; i++){
+            var toPush = true;
+            for(var j = 0; j < $scope.userChallenges.length; j++){
+              if (res.data[i]._id === $scope.userChallenges[j]._id){
+                toPush = false;
+              }
+            }
+            if(toPush){
+              console.log('We pushed!');
+              $scope.allChallenges.push(res.data[i]);
+              console.log($scope.allChallenges);
             }
           }
-          if(toPush){
-            console.log('We pushed!');
-            $scope.allChallenges.push(res.data[i]);
-            console.log($scope.allChallenges);
-          }
-        }
-        //sets scope.allrChallenges to the array of all challenges available
-      }, function(err){
-        console.log(err);
-      });
+        }, function(err){
+          console.log(err);
+        });
       });
      };
-
-    //  //calls Todo.getAllChallenges which returns the array of all challenges available
-    // $scope.getAllChallenges = function(){
-    //  };
 
 
     $scope.addChallenge = function(index){
       Todo.putUserChallenge($scope.allChallenges[index]._id)
       .then(function(res){
         $scope.getUserChallenges();
-        // $scope.getAllChallenges();
       }, function(err){
         console.log(err);
       });
      };
 
-    // $scope.addChallenge = function(index){
-    //   console.log($scope.allChallenges[index]);
-    //   $scope.userChallenges.push($scope.allChallenges[index]);
-    // };
     $scope.addUserTask = function(){
-     var data = document.getElementById('taskData').value;
-     var task = {id: 11, description: data, completed: false, rewards: null};
-     $scope.tasks.push(task);
-     document.getElementById('taskData').value = '';
-    };
+      var data = document.getElementById('taskData').value;
+      var task = {description: data, completed: false, rewards: null};
+      Todo.putUserTask(task)
+      .then(function(res){
+        document.getElementById('taskData').value = '';
+        $scope.getUserTasks();
+      }, function(err){
+        console.log(err);
+      });
+     };
+
+    // $scope.addUserTask = function(){
+    //  var data = document.getElementById('taskData').value;
+    //  var task = {id: 11, description: data, rewards: null, completed: false,};
+    //  $scope.tasks.push(task);
+    //  document.getElementById('taskData').value = '';
+    // };
 
     //Initialization function for getting initial user data
     $scope.init = function(){
      $scope.getUserTasks();
      $scope.getUserChallenges();
-     // $scope.getAllChallenges();
     };
 
     $scope.init();
