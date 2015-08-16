@@ -335,7 +335,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       Todo.putUserChallenge($scope.allChallenges[index]._id)
       .then(function(res){
         $scope.getUserChallenges();
-        $scope.getAllChallenges();
+        // $scope.getAllChallenges();
       }, function(err){
         console.log(err);
       });
@@ -356,7 +356,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.init = function(){
      $scope.getUserTasks();
      $scope.getUserChallenges();
-     $scope.getAllChallenges();
+     // $scope.getAllChallenges();
     };
 
     $scope.init();
