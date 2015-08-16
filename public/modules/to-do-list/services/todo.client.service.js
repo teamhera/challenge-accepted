@@ -57,13 +57,9 @@ angular.module('to-do-list').factory('Todo', ['$http',
         url: '/users/tasks'
       })
       .then(function(response){
-        console.log('SUCCESS IN THE SERVICE');
-        console.log(response);
-        console.log('The data from the response: ' + response.data);
         return response;
       },
       function(err){
-        console.log('ERROR');
         console.log(err);
       });
     };
