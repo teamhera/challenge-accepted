@@ -73,13 +73,30 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var removeUserTask = function(id){
+     return $http({
+        method: 'PUT',
+        url: '/users/tasks/remove',
+        data: {_id: id}
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
+
+
     // Public API
     return {
       getUserTasks: getUserTasks,
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
       putUserChallenge: putUserChallenge,
-      putUserTask: putUserTask
+      putUserTask: putUserTask,
+      removeUserTask: removeUserTask
 		};
 	}
 ]);

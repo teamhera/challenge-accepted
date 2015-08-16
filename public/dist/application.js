@@ -356,6 +356,32 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
      };
 
+    // $scope.completeUserTask = function(index){
+    //   $scope.tasks[index].completed = true;
+    //   Todo.putUserTask($scope.tasks[index])
+    //   .then(function(res){
+    //     console.log($scope.tasks[index]);
+    //     $scope.getUserTasks();
+    //   },function(err){
+    //     console.log(err);
+    //   });
+    // };
+
+    // $scope.completeChallengeTask = function(index){
+    //   this.tasks[index].completed = true;
+    //   Todo.putUserTask(this.tasks[index])
+    //   .then(function(res){
+    //     console.log(this.tasks[index]);
+    //     $scope.getUserChallenges();
+    //   },function(err){
+    //     console.log(err);
+    //   });
+    // };
+
+    //  $scope.removeTask = function(index){
+
+    //  };
+
     //Initialization function for getting initial user data
     $scope.init = function(){
      $scope.getUserTasks();
@@ -441,13 +467,30 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var removeUserTask = function(id){
+     return $http({
+        method: 'PUT',
+        url: '/users/tasks/remove',
+        data: {_id: id}
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
+
+
     // Public API
     return {
       getUserTasks: getUserTasks,
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
       putUserChallenge: putUserChallenge,
-      putUserTask: putUserTask
+      putUserTask: putUserTask,
+      removeUserTask: removeUserTask
 		};
 	}
 ]);

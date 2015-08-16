@@ -5,19 +5,18 @@
       <div class="col-md-8">
 
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    Primary To Do List</h3>
-            </div>
-            <ul class="list-group">
-              <li ng-repeat="task in tasks" class="list-group-item"><span class="ex-img"><img src="modules/to-do-list/img/ex.png"></span>{{ task.description }}</li>
-            </ul>
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button ng-click="addUserTask()" class="btn btn-default" type="button">Add</button>
-          </span>
-          <input type="text" class="form-control" id="taskData" placeholder="Add task...">
-        </div><!-- /input-group -->
+          <div class="panel-heading">
+            <h3 class="panel-title">Todo List</h3>
+          </div>
+          <ul class="list-group">
+            <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span>{{ task.description }}</li>
+          </ul>
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button ng-click="addUserTask()" class="btn btn-default" type="button">Add</button>
+            </span>
+            <input type="text" class="form-control" id="taskData" placeholder="Add task...">
+          </div><!-- /input-group -->
         </div>
 
 
@@ -27,7 +26,7 @@
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
               <ul class="list-group">
-                <li class="list-group-item" ng-repeat="task in challenge.tasks"><span class="ex-img"><img src="modules/to-do-list/img/ex.png"> {{task.description}}</li>
+                <li class="list-group-item" ng-repeat="task in challenge.tasks"><span ng-click="completeChallengeTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"> {{task.description}}</li>
               </ul>
           </div>
         </div>
