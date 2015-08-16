@@ -9,7 +9,8 @@
             <h3 class="panel-title">Todo List</h3>
           </div>
           <ul class="list-group">
-            <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span>{{ task.description }}</li>
+            <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span><span ng-if="task.completed" class="completed">{{ task.description }}</span>
+            <span ng-if="!task.completed" class="not-completed">{{ task.description }}</span></li>
           </ul>
           <div class="input-group">
             <span class="input-group-btn">
