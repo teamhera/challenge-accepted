@@ -43,7 +43,9 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
             }
           }
           if(toPush){
+            console.log('We pushed!');
             $scope.allChallenges.push(res.data[i]);
+            console.log($scope.allChallenges);
           }
         }
         //sets scope.allrChallenges to the array of all challenges available
