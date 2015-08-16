@@ -1,9 +1,9 @@
 .ex-img img{
-  visibility: hidden;
+/*  visibility: hidden;*/
   height: 15px;
   width: 15px;
   margin-right: 10px;
 }
-.ex-img:hover img{
+/*.ex-img:hover img{
   visibility: visible;
-}
+}*/

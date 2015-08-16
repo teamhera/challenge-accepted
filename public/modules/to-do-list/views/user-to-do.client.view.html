@@ -5,19 +5,18 @@
       <div class="col-md-8">
 
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    Primary To Do List</h3>
-            </div>
-            <ul class="list-group">
-              <li ng-repeat="task in tasks" class="list-group-item"><span class="ex-img"><img src="modules/to-do-list/img/ex.png"></span>{{ task.description }}</li>
-            </ul>
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button ng-click="addUserTask()" class="btn btn-default" type="button">Add</button>
-          </span>
-          <input type="text" class="form-control" id="taskData" placeholder="Add task...">
-        </div><!-- /input-group -->
+          <div class="panel-heading">
+            <h3 class="panel-title">Todo List</h3>
+          </div>
+          <ul class="list-group">
+            <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span>{{ task.description }}</li>
+          </ul>
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button ng-click="addUserTask()" class="btn btn-default" type="button">Add</button>
+            </span>
+            <input type="text" class="form-control" id="taskData" placeholder="Add task...">
+          </div><!-- /input-group -->
         </div>
 
 
@@ -27,7 +26,7 @@
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
               <ul class="list-group">
-                <li data-ng-bind="task.description" class="list-group-item" ng-repeat="task in challenge.tasks"></li>
+                <li class="list-group-item" ng-repeat="task in challenge.tasks"><span ng-click="completeChallengeTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"> {{task.description}}</li>
               </ul>
           </div>
         </div>
@@ -41,47 +40,3 @@
 
     </div>
 </section>
-
-
-<!--
-
-<ul class="list-group" ng-repeat="topic in mainTopics">
-    <li class="list-group-item"> {{topic.name}}</li>
-
-
-var challenges = [challenge1, challenge2, challenge3]
-
-for each challenge generate:
-  - <div ng-repeat"{challenge in challenges}" class="panel-primary"
-
-Primary fixed
-
-
-tasks = {
-  id = int,
-  description = string,
-  completed = true/false,
-  reward = string (can be null)
-}
-
-challenge = {
-  name = string,
-  description = string,
-  reward = string,
-  tasks = [
-
-  ]
-}
-
-User = {
-  username = string //primary key
-  password = ###,
-  rewards = ###,
-  tasks = [
-
-  ],
-  challenges = [
-
-  ]
-}
--->

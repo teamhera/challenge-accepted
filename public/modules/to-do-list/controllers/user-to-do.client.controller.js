@@ -77,12 +77,32 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
      };
 
-    // $scope.addUserTask = function(){
-    //  var data = document.getElementById('taskData').value;
-    //  var task = {id: 11, description: data, rewards: null, completed: false,};
-    //  $scope.tasks.push(task);
-    //  document.getElementById('taskData').value = '';
-    // };
+    $scope.completeUserTask = function(index){
+      console.log('completeUserTask, line 81 controller');
+      console.log($scope.tasks);
+      console.log($scope.tasks[index]);
+      Todo.updateUserTask($scope.tasks[index].id)
+      .then(function(res){
+        $scope.getUserTasks();
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    $scope.completeChallengeTask = function(index){
+      console.log('completeChallengeTask, line 91 controller');
+      console.log(this);
+      Todo.updateChallengeTask(this._id, this.tasks[index].id)
+      .then(function(res){
+        $scope.getUserChallenges();
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    //  $scope.removeTask = function(index){
+
+    //  };
 
     //Initialization function for getting initial user data
     $scope.init = function(){
@@ -93,30 +113,3 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.init();
   }
 ]);
-
-
-
-
-/* DATA MODEL
-tasks = {
-  id = int,
-  description = string,
-  completed = true/false,
-  reward = string (can be null)
-}
-challenge = {
-  name = string,
-  description = string,
-  reward = string,
-  tasks = [
-  ]
-}
-User = {
-  username = string //primary key
-  password = ###,
-  rewards = ###,
-  tasks = [task go here],
-  challenges = [challenge go here]
-}
-AllChalenges = [ {challenge1}, {challenge2} ]
-*/

@@ -356,12 +356,32 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
      };
 
-    // $scope.addUserTask = function(){
-    //  var data = document.getElementById('taskData').value;
-    //  var task = {id: 11, description: data, rewards: null, completed: false,};
-    //  $scope.tasks.push(task);
-    //  document.getElementById('taskData').value = '';
-    // };
+    $scope.completeUserTask = function(index){
+      console.log('completeUserTask, line 81 controller');
+      console.log($scope.tasks);
+      console.log($scope.tasks[index]);
+      Todo.updateUserTask($scope.tasks[index].id)
+      .then(function(res){
+        $scope.getUserTasks();
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    $scope.completeChallengeTask = function(index){
+      console.log('completeChallengeTask, line 91 controller');
+      console.log(this);
+      Todo.updateChallengeTask(this._id, this.tasks[index].id)
+      .then(function(res){
+        $scope.getUserChallenges();
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    //  $scope.removeTask = function(index){
+
+    //  };
 
     //Initialization function for getting initial user data
     $scope.init = function(){
@@ -373,53 +393,10 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
   }
 ]);
 
-
-
-
-/* DATA MODEL
-tasks = {
-  id = int,
-  description = string,
-  completed = true/false,
-  reward = string (can be null)
-}
-
-challenge = {
-  name = string,
-  description = string,
-  reward = string,
-  tasks = [
-
-  ]
-}
-
-User = {
-  username = string //primary key
-  password = ###,
-  rewards = ###,
-  tasks = [task go here],
-  challenges = [challenge go here]
-}
-
-AllChalenges = [ {challenge1}, {challenge2} ]
-*/
-
 'use strict';
 
 angular.module('to-do-list').factory('Todo', ['$http',
   function($http) {
-    // Todo service logic
-    // ...
-
-//    User = {
-//      username = string //primary key
-//      password = ###,
-//      rewards = ###,
-//      tasks = [],
-//      challenges = []
-// }
-
-
 
     //Requests list of user tasks from the server
     var getUserTasks = function(){
@@ -462,7 +439,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
-
+    //Adds a challenge to user
     var putUserChallenge = function(id){
       return $http({
         method: 'PUT',
@@ -476,12 +453,12 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
-
-    var putUserTask = function(task){
+    //Change
+    var updateUserTask = function(taskId){
       return $http({
         method: 'PUT',
-        url: '/users/tasks',
-        data: task
+        url: '/users/tasks/update',
+        data: {id: taskId}
       })
       .then(function(response){
         return response;
@@ -491,8 +468,34 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var updateChallengeTask = function(challengeId, taskId){
+      return $http({
+        method: 'PUT',
+        url: '/users/tasks/update',
+        data: {_id: challengeId, id: taskId}
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
 
-    // /users/challenges PUT add challenge to challenges for user
+    // var removeUserTask = function(id){
+    //  return $http({
+    //     method: 'PUT',
+    //     url: '/users/tasks/remove',
+    //     data: {_id: id}
+    //   })
+    //   .then(function(response){
+    //     return response;
+    //   },
+    //   function(err){
+    //     console.log(err);
+    //   });
+    // };
+
 
 
     // Public API
@@ -501,22 +504,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
       putUserChallenge: putUserChallenge,
-      putUserTask: putUserTask
+      updateUserTask: updateUserTask,
+      updateChallengeTask: updateChallengeTask
 		};
 	}
 ]);
-
-
-
-
-/*
- $scope.tasks = [{id: 12, description: 'Do your laundry', completed: false, rewards: null},{id: 16, description: 'Do the dishes', completed: false, rewards: null}];
-	  $scope.userChallenges =[{name: 'Weight Lifting', description: 'This is a weightlifting challenge', rewards: null, tasks: [{id: 22, description: 'Squat 10x', completed: false, rewards: null},{id: 5, description: 'Bench 10x', completed: false, rewards: null}]},
-                        {name: 'Scuba Diving', description: 'This is a scuba diving challenge', rewards: null, tasks: [{id: 66, description: 'Wrestle a shark', completed: false, rewards: null},{id: 11, description: 'Touch a stingray', completed: false, rewards: null}]}];
-    $scope.allChallenges = [{name: 'Awesome Diet', description: 'This is a dieting challenge', rewards: null, tasks: [{id: 22, description: 'Diet 1x', completed: false, rewards: null},{id: 5, description: 'Eat 47 apples', completed: false, rewards: null}]},
-                        {name: 'Rock Climbing', description: 'This is a rock climbing challenge', rewards: null, tasks: [{id: 66, description: 'Climb 1x', completed: false, rewards: null},{id: 11, description: 'Climb 100x', completed: false, rewards: null}]}];
-
-*/
 
 'use strict';
 
