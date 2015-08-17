@@ -24,8 +24,11 @@ exports.addChallenges = function(req, res){
   if(req.user){
     return User.find({_id: req.user._id}, function(err, user){
       Challenge.find({_id: req.body._id}, function(err,item){
-        console.log(req);
-        user[0].challenges.push(item[0]);
+        var today = Date.now();
+        item[0].tasks.forEach(function(task, i){
+          item[0].tasks[i].taskSchedule = today + (86400000 * task.relativeDate);
+        });
+        user[0].challenges.push(item[0]); //referenced copy? or is db immune?
         user[0].save();
         res.send();
       });

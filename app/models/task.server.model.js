@@ -21,6 +21,10 @@ var TaskSchema = new Schema({
   completed: {
     type: Boolean,
     default: false
+  },
+  relativeDate: {
+    type: Number,
+    default: 0
   }
 });
 
