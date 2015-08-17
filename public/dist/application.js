@@ -392,26 +392,21 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.nextDay = function(){
       $scope.today = new Date();
       $scope.dayModifier++;
-      console.log($scope.dayModifier);
       $scope.today.setDate($scope.today.getDate() + $scope.dayModifier);
       $scope.displayDay = $scope.today;
-      console.log($scope.displayDay);
+      $scope.prettyDate = $scope.displayDay.toDateString();
     };
 
     $scope.prevDay = function(){
       $scope.today = new Date();
       $scope.dayModifier--;
-      console.log($scope.dayModifier);
       $scope.today.setDate($scope.today.getDate() + $scope.dayModifier);
       $scope.displayDay = $scope.today;
-      console.log($scope.displayDay);
+      $scope.prettyDate = $scope.displayDay.toDateString();
     };
 
     $scope.checkDate = function(day){
       var itemDate = new Date(day);
-      console.log(day);
-      console.log(itemDate);
-      console.log($scope.displayDay);
       if (itemDate.getDate() !== $scope.displayDay.getDate()){
         return false;
       }
@@ -426,6 +421,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
 
     $scope.dayModifier = 0;
     $scope.displayDay = new Date();
+    $scope.prettyDate = $scope.displayDay.toDateString();
 
     //Initialization function for getting initial user data
     $scope.init = function(){
