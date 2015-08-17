@@ -58,6 +58,20 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
+
+    var putUserTask = function(task){
+      return $http({
+        method: 'PUT',
+        url: '/users/tasks',
+        data: task
+      })
+      .then(function(response){
+        return response;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
     //Change
     var updateUserTask = function(taskId){
       return $http({
@@ -65,6 +79,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
         url: '/users/tasks/update',
         data: {taskId: taskId}
       })
+
       .then(function(response){
         return response;
       },
@@ -109,6 +124,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
       getUserChallenges: getUserChallenges,
       getAllChallenges: getAllChallenges,
       putUserChallenge: putUserChallenge,
+      putUserTask: putUserTask,
       updateUserTask: updateUserTask,
       updateChallengeTask: updateChallengeTask
 		};
