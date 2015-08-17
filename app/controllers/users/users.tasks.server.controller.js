@@ -51,11 +51,12 @@ exports.toggleUserTask = function(req,res){ //req.body.taskId   req.body.challen
       } else {
         taskArray = item[0].tasks;
       }
-      taskArray.forEach(function(task){
+      taskArray.forEach(function(task, index){
         if(task._id.toString() === req.body.taskId){
           task.completed = !task.completed;
         }
       });
+      item[0].markModified('tasks');
       item[0].save();
       res.send();
     });
