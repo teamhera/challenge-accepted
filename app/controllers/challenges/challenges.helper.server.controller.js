@@ -20,7 +20,7 @@ exports.getChallenges = function(req,res){
 
 // this function adds a single challenge document in challenges table
 exports.addChallenges = function(req,res){
-  if(req.user){
+  // if(req.user){
     var challenge = req.body;
 
     // replaces each task in challenge into a proper Task
@@ -34,11 +34,11 @@ exports.addChallenges = function(req,res){
     var newChallenge = new Challenges(challenge);
     newChallenge.save();
     return res.send();
-  } else {
-    return res.status(400).send({
-      message: 'User is not signed in'
-    });
-  }
+  // } else {
+  //   return res.status(400).send({
+  //     message: 'User is not signed in'
+  //   });
+  // }
 };
 
 // this function returns an array of challenges from challenges table
