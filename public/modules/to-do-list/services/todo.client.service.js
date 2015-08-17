@@ -92,7 +92,7 @@ angular.module('to-do-list').factory('Todo', ['$http',
       return $http({
         method: 'PUT',
         url: '/users/tasks/update',
-        data: {taskId: taskId, challengeId: challengeId }
+        data: {taskId: String(taskId), challengeId: String(challengeId) }
       })
       .then(function(response){
         return response;
