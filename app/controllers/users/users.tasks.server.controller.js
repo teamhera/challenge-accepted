@@ -26,8 +26,9 @@ exports.putUserTasks = function(req,res){
     return User.find({_id: req.user._id}, function(err, item){
       item[0].tasks.push(task);
       task.save();
-      item[0].save();
-      res.send();
+      User.update({_id: req.user._id}, {tasks: item[0].tasks}, {upsert: true}, function(err, item) {
+        res.send();
+      });
     });
   } else {
 
@@ -56,10 +57,9 @@ exports.toggleUserTask = function(req,res){ //req.body.taskId   req.body.challen
           task.completed = !task.completed;
         }
       });
-      item[0].markModified('tasks');
-      item[0].markModified('challenges');
-      item[0].save();
-      res.send();
+      User.update({_id: req.user._id}, {tasks: item[0].tasks, challenges: item[0].challenges}, {upsert: true}, function(err, item) {
+        res.send();
+      });
     });
   } else {
     return res.status(400).send({
@@ -75,25 +75,15 @@ exports.removeUserTasks = function(req,res){
       item[0].tasks = item[0].tasks.filter(function(element){
         return element._id.toString() !== req.body._id;
       });
-      item[0].save();
+      User.update({_id: req.user._id}, {tasks: item[0].tasks}, {upsert: true}, function(err, item) {
+        res.send();
+      });
+    });
+  } else {
+    return res.status(400).send({
+      message: 'User is not signed in'
     });
   }
 };
-// replace db user tasks array with array received from client request
-// exports.reportUserTasks = function(req,res){
-//   if(req.user){
-//     var user = req.body;
-//     return User.find({_id: req.user._id}, function(err, item){
-//       item[0].tasks = user.tasks;
-//       item[0].save();
-//       res.send();
-//     });
-//   } else {
-
-//     return res.status(400).send({
-//       message: 'User is not signed in'
-//     });
-//   }
-// };
 
 // TODO: create utility.js, add function for user not signed in

@@ -14,13 +14,11 @@ module.exports = function(app) {
 	app.route('/users/tasks').put(users.putUserTasks); // add single task to user tasks array
 	app.route('/users/tasks/remove').put(users.removeUserTasks); //delete a task from user tasks array
 	app.route('/users/tasks/update').put(users.toggleUserTask); // toggle completion of task
-	// app.route('/users/tasks').report(users.reportUserTasks); // replace db user task array with array received from client request
 
 	// Setting up the users challenges routes
 	app.route('/users/challenges').get(users.getAllUserChallenges); // get all challenges from user
 	app.route('/users/challenges').put(users.addChallenges); // add challenge to user challenges array
 	app.route('/users/challenges/remove').put(users.removeUserChallenges); // remove challenge from user challenges array
-	// app.route('/users/challenges').report(users.updateChallenges); // replace db user challenge array with array received from client request
 
 	// Setting up the users profile api
 	app.route('/users/me').get(users.me);

@@ -29,8 +29,9 @@ exports.addChallenges = function(req, res){
           item[0].tasks[i].taskSchedule = new Date(today + (86400000 * task.relativeDate));
         });
         user[0].challenges.push(item[0]); //referenced copy? or is db immune?
-        user[0].save();
-        res.send();
+        User.update({_id: req.user._id}, {challenges: user[0].challenges}, {upsert: true}, function(err, item) {
+          res.send();
+        });
       });
     });
   } else {
@@ -51,8 +52,9 @@ exports.removeUserChallenges = function(req, res){
           return false;
         }
       });
-      user[0].save();
-      res.send();
+      User.update({_id: req.user._id}, {challenges: user[0].challenges}, {upsert: true}, function(err, item) {
+        res.send();
+      });
     });
   } else {
     return res.status(400).send({
@@ -60,19 +62,3 @@ exports.removeUserChallenges = function(req, res){
     });
   }
 };
-
-// replace db user challenge array with array received from client request -report
-// exports.updateChallenges = function(req, res){
-//   if(req.user){
-//     var challenges = req.body.challenges;
-//     return User.find({_id: req.user._id}, function(err, item){
-//       item.challenges = challenges;
-//       item.save();
-//       res.send();
-//     });
-//   } else {
-//     return res.status(400).send({
-//       message: 'User is not signed in'
-//     });
-//   }
-// };
