@@ -27,7 +27,10 @@
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
               <ul class="list-group">
-                <li class="list-group-item" ng-repeat="task in challenge.tasks"><span ng-click="completeChallengeTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"> {{task.description}}</li>
+                <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeChallengeTask($index)" class="ex-img">
+                  <img src="modules/to-do-list/img/ex.png"></span><span ng-if="task.completed" class="completed">{{ task.description }}</span>
+                  <span ng-if="!task.completed" class="not-completed">{{ task.description }}</span>
+                </li>
               </ul>
           </div>
         </div>
