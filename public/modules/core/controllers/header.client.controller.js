@@ -16,7 +16,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$location', 'A
 		});
 
 		$scope.getLocation = function(){
-			return $location.path() === "/";
+			return $location.path() === '/';
 		};
 	}
 ]);
