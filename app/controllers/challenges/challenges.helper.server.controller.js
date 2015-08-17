@@ -22,11 +22,15 @@ exports.getChallenges = function(req,res){
 exports.addChallenges = function(req,res){
   if(req.user){
     var challenge = req.body;
-    challenge.tasks.forEach(function(task){
+
+    // replaces each task in challenge into a proper Task
+    challenge.tasks.forEach(function(task, i){
       var newTask = new Task(task);
       newTask.save();
-      task = newTask;
+      challenge.tasks[i] = newTask;
     });
+
+    // create new challenge 
     var newChallenge = new Challenges(challenge);
     newChallenge.save();
     return res.send();
