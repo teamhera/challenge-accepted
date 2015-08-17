@@ -357,7 +357,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
      };
 
     $scope.completeUserTask = function(index){
-      Todo.updateUserTask($scope.tasks[index].id)
+      Todo.updateUserTask($scope.tasks[index]._id)
       .then(function(res){
         $scope.getUserTasks();
         console.log('completeUserTask, line 81 controller');
@@ -369,7 +369,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     };
 
     $scope.completeChallengeTask = function(index){
-      Todo.updateChallengeTask(this._id, this.tasks[index].id)
+      Todo.updateChallengeTask(this._id, this.tasks[index]._id)
       .then(function(res){
         $scope.getUserChallenges();
         console.log('completeChallengeTask, line 91 controller');
