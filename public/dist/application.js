@@ -291,7 +291,6 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.getUserTasks = function(){
       Todo.getUserTasks()
       .then(function(res){
-        console.log(res);
         //sets scope.tasks to the array of user tasks
         $scope.tasks = res.data;
       }, function(err){
@@ -302,7 +301,8 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.getUserChallenges = function(){
       Todo.getUserChallenges()
       .then(function(res){
-        console.log(res);
+        console.log('getUserChallenges res.data');
+        console.log(res.data);
         //sets scope.userChallenges to the array of challenges the user is involved in
         $scope.userChallenges = res.data;
       }, function(err){
@@ -312,7 +312,6 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
         //Returns array of all challenges available to user
          Todo.getAllChallenges()
         .then(function(res){
-          console.log(res);
           //filters for challenges already attached to user
           $scope.allChallenges = [];
           for (var i = 0; i < res.data.length; i++){
@@ -323,9 +322,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
               }
             }
             if(toPush){
-              console.log('We pushed!');
               $scope.allChallenges.push(res.data[i]);
-              console.log($scope.allChallenges);
             }
           }
         }, function(err){
@@ -360,23 +357,21 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       Todo.updateUserTask($scope.tasks[index]._id)
       .then(function(res){
         $scope.getUserTasks();
-        console.log('completeUserTask, line 81 controller');
-        console.log($scope.tasks);
-        console.log($scope.tasks[index]);
       },function(err){
         console.log(err);
       });
     };
 
     $scope.completeChallengeTask = function(index){
-      console.log('this test');
-      console.log(this);
-      console.log('$scope test');
-      console.log($scope);
+      console.log('TASK ID');
+      console.log(this.task._id);
+      console.log('CHALLENGE ID');
+      console.log(this.$parent.challenge._id);
+      console.log('COMPLETED STATE BEFORE UPDATE');
+      console.log(this.task.completed);
       Todo.updateChallengeTask(this.$parent.challenge._id, this.task._id) //this.task._id === right task
       .then(function(res){
         $scope.getUserChallenges();
-        console.log('completeChallengeTask, line 91 controller');
       },function(err){
         console.log(err);
       });
