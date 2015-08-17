@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
   passport = require('passport'),
-  Challenges = mongoose.model('Challenge');
+  Challenges = mongoose.model('Challenge'),
+  Task = mongoose.model('Task');
 
 // this functions returns all documents in challenges table
 exports.getChallenges = function(req,res){
@@ -20,8 +21,18 @@ exports.getChallenges = function(req,res){
 // this function adds a single challenge document in challenges table
 exports.addChallenges = function(req,res){
   if(req.user){
-    var challenge = new Challenges(req.body);
-    challenge.save();
+    var challenge = req.body;
+
+    // replaces each task in challenge into a proper Task
+    challenge.tasks.forEach(function(task, i){
+      var newTask = new Task(task);
+      newTask.save();
+      challenge.tasks[i] = newTask;
+    });
+
+    // create new challenge 
+    var newChallenge = new Challenges(challenge);
+    newChallenge.save();
     return res.send();
   } else {
     return res.status(400).send({
@@ -34,7 +45,6 @@ exports.addChallenges = function(req,res){
 // request body should have at least one paramater that can match a challenge
 exports.findChallenges = function(req,res){
   if(req.user){
-    console.log(req.body);
     return Challenges.find(req.body, function(err, challenges) {
       res.send(challenges);
     });
