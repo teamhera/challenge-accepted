@@ -304,6 +304,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       .then(function(res){
         //sets scope.tasks to the array of user tasks
         $scope.tasks = res.data;
+        console.log($scope.tasks);
       }, function(err){
         console.log(err);
       });
@@ -388,14 +389,48 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       });
     };
 
-    //  $scope.removeTask = function(index){
+    $scope.nextDay = function(){
+      $scope.today = new Date();
+      $scope.dayModifier++;
+      console.log($scope.dayModifier);
+      $scope.today.setDate($scope.today.getDate() + $scope.dayModifier);
+      $scope.displayDay = $scope.today;
+      console.log($scope.displayDay);
+    };
 
-    //  };
+    $scope.prevDay = function(){
+      $scope.today = new Date();
+      $scope.dayModifier--;
+      console.log($scope.dayModifier);
+      $scope.today.setDate($scope.today.getDate() + $scope.dayModifier);
+      $scope.displayDay = $scope.today;
+      console.log($scope.displayDay);
+    };
+
+    $scope.checkDate = function(day){
+      var itemDate = new Date(day);
+      console.log(day);
+      console.log(itemDate);
+      console.log($scope.displayDay);
+      if (itemDate.getDate() !== $scope.displayDay.getDate()){
+        return false;
+      }
+      if (itemDate.getMonth() !== $scope.displayDay.getMonth()){
+        return false;
+      }
+      if (itemDate.getFullYear() !== $scope.displayDay.getFullYear()){
+        return false;
+      }
+      else return true;
+    };
+
+    $scope.dayModifier = 0;
+    $scope.displayDay = new Date();
 
     //Initialization function for getting initial user data
     $scope.init = function(){
-     $scope.getUserTasks();
-     $scope.getUserChallenges();
+      $scope.getUserTasks();
+      $scope.getUserChallenges();
     };
 
     $scope.init();
@@ -505,6 +540,21 @@ angular.module('to-do-list').factory('Todo', ['$http',
         console.log(err);
       });
     };
+
+    var addChallenge = function(){
+      return $http({
+        method: 'PUT',
+        url: '/challenges',
+        data: {}
+      })
+      .then(function(response){
+        return response;
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    //curl -H "Content-Type: application/json" -X PUT -d '{"name":"test me","description":"test info","reward":"stuff","tasks":[{"description": "one day", "relativeDate": 1},{"description": "two day", "relativeDate": 2}]}' https://heraapphrr7.herokuapp.com/challenges
 
     // var removeUserTask = function(id){
     //  return $http({
