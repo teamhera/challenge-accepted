@@ -90,11 +90,12 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     };
 
     $scope.completeChallengeTask = function(index){
+      console.log('this test');
+      console.log(this);
       Todo.updateChallengeTask(this._id, this.tasks[index]._id)
       .then(function(res){
         $scope.getUserChallenges();
         console.log('completeChallengeTask, line 91 controller');
-        console.log(this);
       },function(err){
         console.log(err);
       });
