@@ -369,7 +369,7 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
       console.log(this.$parent.challenge._id);
       console.log('COMPLETED STATE BEFORE UPDATE');
       console.log(this.task.completed);
-      Todo.updateChallengeTask(this.$parent.challenge._id, this.task._id) //this.task._id === right task
+      Todo.updateChallengeTask(this.task._id, this.$parent.challenge._id) //this.task._id === right task
       .then(function(res){
         $scope.getUserChallenges();
       },function(err){
@@ -481,11 +481,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
-    var updateChallengeTask = function(challengeId, taskId){
+    var updateChallengeTask = function(taskId, challengeId){
       return $http({
         method: 'PUT',
         url: '/users/tasks/update',
-        data: {challengeId: challengeId, taskId: taskId}
+        data: {taskId: taskId, challengeId: challengeId }
       })
       .then(function(response){
         return response;
