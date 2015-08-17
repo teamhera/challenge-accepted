@@ -102,6 +102,21 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
+    var addChallenge = function(){
+      return $http({
+        method: 'PUT',
+        url: '/challenges',
+        data: {}
+      })
+      .then(function(response){
+        return response;
+      },function(err){
+        console.log(err);
+      });
+    };
+
+    //curl -H "Content-Type: application/json" -X PUT -d '{"name":"test me","description":"test info","reward":"stuff","tasks":[{"description": "one day", "relativeDate": 1},{"description": "two day", "relativeDate": 2}]}' https://heraapphrr7.herokuapp.com/challenges
+
     // var removeUserTask = function(id){
     //  return $http({
     //     method: 'PUT',

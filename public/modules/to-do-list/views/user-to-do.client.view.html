@@ -6,10 +6,14 @@
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Todo List</h3>
+            <span class="btn-group">
+              <h3 class="panel-title">Todo List</h3>
+              <button ng-click="nextDay()" type="button" class="btn btn-default">Next Day</button>
+              <button ng-click="prevDay()" type="button" class="btn btn-default">Previous Day</button>
+            </span>
           </div>
-          <ul class="list-group">         
-            <li ng-repeat="task in tasks" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span><span ng-if="task.completed" class="completed">{{ task.description }}</span>
+          <ul class="list-group">
+            <li ng-repeat="task in tasks" ng-if="checkDate(task.taskSchedule)" class="list-group-item"><span ng-click="completeUserTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span><span ng-if="task.completed" class="completed">{{ task.description }}</span>
             <span ng-if="!task.completed" class="not-completed">{{ task.description }}</span></li>
           </ul>
           <div class="input-group">
@@ -27,7 +31,7 @@
                   <h3 data-ng-bind="challenge.name" class="panel-title"></h3>
               </div>
               <ul class="list-group">
-                <li class="list-group-item" ng-repeat="task in challenge.tasks">
+                <li class="list-group-item" ng-repeat="task in challenge.tasks" ng-if"checkDate(task.taskSchedule)">
                   <span ng-click="completeChallengeTask($index)" class="ex-img"><img src="modules/to-do-list/img/ex.png"></span><span ng-if="task.completed" class="completed">{{ task.description }}</span>
                   <span ng-if="!task.completed" class="not-completed">{{ task.description }}</span>
                 </li>
