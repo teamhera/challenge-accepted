@@ -102,11 +102,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
-    var addChallenge = function(){
+    var addChallenge = function(data){
       return $http({
         method: 'PUT',
         url: '/challenges',
-        data: {}
+        data: data
       })
       .then(function(response){
         return response;
@@ -141,7 +141,8 @@ angular.module('to-do-list').factory('Todo', ['$http',
       putUserChallenge: putUserChallenge,
       putUserTask: putUserTask,
       updateUserTask: updateUserTask,
-      updateChallengeTask: updateChallengeTask
+      updateChallengeTask: updateChallengeTask,
+      addChallenge: addChallenge
 		};
 	}
 ]);

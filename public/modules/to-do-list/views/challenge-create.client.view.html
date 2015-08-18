@@ -1,0 +1,37 @@
+<section data-ng-controller="UserToDoController">
+<div class="panel panel-success">
+    <div class="panel-heading">
+      <span class="btn-group">
+        <h3 class="panel-title">Current Challenge Name: {{ newChallenge.name }}</h3>
+      </span>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button ng-click="addNewChallengeName()" class="btn btn-default" type="button">Add</button>
+        </span>
+        <input type="text" class="form-control" id="nameData" placeholder="Add Challenge Name">
+      </div><!-- /input-group -->
+        <button ng-click="submitChallenge()" type="button" class="btn btn-default">Done Adding Tasks? Submit Challenge For Everyone to Use!</button>
+    </div>
+    </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="btn-group">
+        <h3 class="panel-title">Tasks for Day {{dayModifier + 1}}</h3>
+        <button ng-click="nextDay()" type="button" class="btn btn-default">Next Day</button>
+        <button ng-click="prevDay()" type="button" class="btn btn-default">Previous Day</button>
+      </span>
+    </div>
+
+    <ul class="list-group">
+      <li ng-repeat="task in newChallenge.tasks" ng-if="checkRelativeDate(task.relativeDate)" class="list-group-item">
+        <span>{{ task.description }}</span>
+      </li>
+    </ul>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button ng-click="addNewChallengeTask()" class="btn btn-default" type="button">Add</button>
+      </span>
+      <input type="text" class="form-control" id="taskData" placeholder="Add task...">
+    </div><!-- /input-group -->
+  </div>
+</section>

@@ -284,15 +284,19 @@ angular.module('to-do-list').config(['$stateProvider',
 		state('user-to-do', {
 			url: '/user-to-do',
 			templateUrl: 'modules/to-do-list/views/user-to-do.client.view.html'
-		});
+		}).
+    state('challenge-create', {
+      url: '/challenge-create',
+      templateUrl: 'modules/to-do-list/views/challenge-create.client.view.html'
+    });
 	}
 ]);
 
 'use strict';
 
-angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication', 'Todo',
+angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication', 'Todo', '$location',
 
-  function($scope, Authentication, Todo) {
+  function($scope, Authentication, Todo, $location) {
     // Controller Logic
     $scope.authentication = Authentication;
 
@@ -423,6 +427,42 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.displayDay = new Date();
     $scope.prettyDate = $scope.displayDay.toDateString();
 
+    //Template Data -- This will be separated into another controller later
+    $scope.newChallenge = {
+      name: '',
+      description: '',
+      reward: 'null',
+      tasks: []
+    };
+
+    $scope.addNewChallengeTask = function(){
+      //Take a challenge task and push it into new challenge task
+      var data = document.getElementById('taskData').value;
+      $scope.newChallenge.tasks.push({description: data, relativeDate: $scope.dayModifier});
+      document.getElementById('taskData').value = '';
+    };
+
+    $scope.addNewChallengeName = function(){
+      var data = document.getElementById('nameData').value;
+      $scope.newChallenge.name = data;
+      document.getElementById('taskData').value = '';
+    };
+
+    $scope.checkRelativeDate = function(day){
+      if(day === $scope.dayModifier){
+        return true;
+      }
+    };
+
+    $scope.submitChallenge = function(){
+      Todo.addChallenge($scope.newChallenge)
+      .then(function(res){
+        $location.path('/user-to-do');
+      }, function(err){
+        console.log(err);
+      });
+     };
+
     //Initialization function for getting initial user data
     $scope.init = function(){
       $scope.getUserTasks();
@@ -432,6 +472,11 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.init();
   }
 ]);
+
+
+///
+
+
 
 'use strict';
 
@@ -537,11 +582,11 @@ angular.module('to-do-list').factory('Todo', ['$http',
       });
     };
 
-    var addChallenge = function(){
+    var addChallenge = function(data){
       return $http({
         method: 'PUT',
         url: '/challenges',
-        data: {}
+        data: data
       })
       .then(function(response){
         return response;
@@ -576,7 +621,8 @@ angular.module('to-do-list').factory('Todo', ['$http',
       putUserChallenge: putUserChallenge,
       putUserTask: putUserTask,
       updateUserTask: updateUserTask,
-      updateChallengeTask: updateChallengeTask
+      updateChallengeTask: updateChallengeTask,
+      addChallenge: addChallenge
 		};
 	}
 ]);
