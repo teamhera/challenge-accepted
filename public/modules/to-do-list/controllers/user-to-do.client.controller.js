@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication', 'Todo',
+angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authentication', 'Todo', '$location',
 
-  function($scope, Authentication, Todo) {
+  function($scope, Authentication, Todo, $location) {
     // Controller Logic
     $scope.authentication = Authentication;
 
@@ -133,6 +133,42 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.displayDay = new Date();
     $scope.prettyDate = $scope.displayDay.toDateString();
 
+    //Template Data -- This will be separated into another controller later
+    $scope.newChallenge = {
+      name: '',
+      description: '',
+      reward: 'null',
+      tasks: []
+    };
+
+    $scope.addNewChallengeTask = function(){
+      //Take a challenge task and push it into new challenge task
+      var data = document.getElementById('taskData').value;
+      $scope.newChallenge.tasks.push({description: data, relativeDate: $scope.dayModifier});
+      document.getElementById('taskData').value = '';
+    };
+
+    $scope.addNewChallengeName = function(){
+      var data = document.getElementById('nameData').value;
+      $scope.newChallenge.name = data;
+      document.getElementById('taskData').value = '';
+    };
+
+    $scope.checkRelativeDate = function(day){
+      if(day === $scope.dayModifier){
+        return true;
+      }
+    };
+
+    $scope.submitChallenge = function(){
+      Todo.addChallenge($scope.newChallenge)
+      .then(function(res){
+        $location.path('/user-to-do');
+      }, function(err){
+        console.log(err);
+      });
+     };
+
     //Initialization function for getting initial user data
     $scope.init = function(){
       $scope.getUserTasks();
@@ -142,3 +178,8 @@ angular.module('to-do-list').controller('UserToDoController', ['$scope', 'Authen
     $scope.init();
   }
 ]);
+
+
+///
+
+
