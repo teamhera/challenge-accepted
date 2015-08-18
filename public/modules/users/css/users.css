@@ -12,3 +12,8 @@
 	right: 10px;
 	position: absolute;
 }
+
+.sign-up-form, .sign-in-form{
+  margin-top: 75px;
+  font-style: italic;
+}
