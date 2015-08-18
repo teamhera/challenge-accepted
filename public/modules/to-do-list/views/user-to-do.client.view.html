@@ -42,7 +42,7 @@
       </div>
       <div class="col-md-4">
         <ul class="list-group">
-          <li class="list-group-item list-group-item-success" ng-repeat="challenge in allChallenges">{{challenge.name}} <button>Add</button><button>More Info</button></li>
+          <li class="list-group-item list-group-item-success" ng-repeat="challenge in allChallenges">{{challenge.name}} <button ng-click="addChallenge($index)">Add</button><button>More Info</button></li>
           <li><button><a href="/#!/challenge-create">Create a Challenge</a></button></li>
         </ul>
       </div>
